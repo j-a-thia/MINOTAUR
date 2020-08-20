@@ -6,7 +6,7 @@
 #' @description Calculates distance between observations as the harmomic mean distance of every point from a selected subset of points (subset defaults to all points).
 #' @keywords internal
 C_harmonicDist <- function(data, subset, S_inv) {
-    .Call('MINOTAUR_C_harmonicDist', PACKAGE = 'MINOTAUR', data, subset, S_inv)
+    .Call('_MINOTAUR_C_harmonicDist', PACKAGE = 'MINOTAUR', data, subset, S_inv)
 }
 
 #' @name C_harmonicDist_partial
@@ -14,7 +14,7 @@ C_harmonicDist <- function(data, subset, S_inv) {
 #' @description Equivalent to C_harmonicDist, but only performs calculation on chunk of data, allowing calculation to be broken into sections and thus tracked by a progress bar.
 #' @keywords internal
 C_harmonicDist_partial <- function(data, S_inv, i_start, i_end) {
-    .Call('MINOTAUR_C_harmonicDist_partial', PACKAGE = 'MINOTAUR', data, S_inv, i_start, i_end)
+    .Call('_MINOTAUR_C_harmonicDist_partial', PACKAGE = 'MINOTAUR', data, S_inv, i_start, i_end)
 }
 
 #' @name C_kernelDeviance
@@ -22,7 +22,7 @@ C_harmonicDist_partial <- function(data, S_inv, i_start, i_end) {
 #' @description Calculates overall deviance (-2*log-likelihood) for given kernel bandwidth. Likelihood of point i is equal to kernel density from all other points in subset, and likelihood of overall data is product over i.
 #' @keywords internal
 C_kernelDeviance <- function(data, subset, sigma2, S_inv) {
-    .Call('MINOTAUR_C_kernelDeviance', PACKAGE = 'MINOTAUR', data, subset, sigma2, S_inv)
+    .Call('_MINOTAUR_C_kernelDeviance', PACKAGE = 'MINOTAUR', data, subset, sigma2, S_inv)
 }
 
 #' @name C_kernelDeviance_partial
@@ -30,7 +30,7 @@ C_kernelDeviance <- function(data, subset, sigma2, S_inv) {
 #' @description Equivalent to C_kernelDeviance, but only performs calculation on chunk of data, allowing calculation to be broken into sections and thus tracked by a progress bar.
 #' @keywords internal
 C_kernelDeviance_partial <- function(data, sigma2, S_inv, i_start, i_end) {
-    .Call('MINOTAUR_C_kernelDeviance_partial', PACKAGE = 'MINOTAUR', data, sigma2, S_inv, i_start, i_end)
+    .Call('_MINOTAUR_C_kernelDeviance_partial', PACKAGE = 'MINOTAUR', data, sigma2, S_inv, i_start, i_end)
 }
 
 #' @name C_kernelDist
@@ -38,7 +38,7 @@ C_kernelDeviance_partial <- function(data, sigma2, S_inv, i_start, i_end) {
 #' @description calculates kernel density of all points from a subset of points.
 #' @keywords internal
 C_kernelDist <- function(data, subset, sigma2, S_inv) {
-    .Call('MINOTAUR_C_kernelDist', PACKAGE = 'MINOTAUR', data, subset, sigma2, S_inv)
+    .Call('_MINOTAUR_C_kernelDist', PACKAGE = 'MINOTAUR', data, subset, sigma2, S_inv)
 }
 
 #' @name C_kernelDist_partial
@@ -46,7 +46,7 @@ C_kernelDist <- function(data, subset, sigma2, S_inv) {
 #' @description equivalent to C_kernelDist, but only performs calculation on chunk of data, allowing calculation to be broken into sections and thus tracked by a progress bar
 #' @keywords internal
 C_kernelDist_partial <- function(data, sigma2, S_inv, i_start, i_end) {
-    .Call('MINOTAUR_C_kernelDist_partial', PACKAGE = 'MINOTAUR', data, sigma2, S_inv, i_start, i_end)
+    .Call('_MINOTAUR_C_kernelDist_partial', PACKAGE = 'MINOTAUR', data, sigma2, S_inv, i_start, i_end)
 }
 
 #' @name C_neighborDist
@@ -54,7 +54,7 @@ C_kernelDist_partial <- function(data, sigma2, S_inv, i_start, i_end) {
 #' @description Calculates nearest neighbor distance between all points and a subset of points.
 #' @keywords internal
 C_neighborDist <- function(data, subset, S_inv) {
-    .Call('MINOTAUR_C_neighborDist', PACKAGE = 'MINOTAUR', data, subset, S_inv)
+    .Call('_MINOTAUR_C_neighborDist', PACKAGE = 'MINOTAUR', data, subset, S_inv)
 }
 
 #' @name C_neighborDist_partial
@@ -62,6 +62,6 @@ C_neighborDist <- function(data, subset, S_inv) {
 #' @description Equivalent to C_neighborDist, but only performs calculation on chunk of data, allowing calculation to be broken into sections and thus tracked by a progress bar.
 #' @keywords internal
 C_neighborDist_partial <- function(data, S_inv, i_start, i_end) {
-    .Call('MINOTAUR_C_neighborDist_partial', PACKAGE = 'MINOTAUR', data, S_inv, i_start, i_end)
+    .Call('_MINOTAUR_C_neighborDist_partial', PACKAGE = 'MINOTAUR', data, S_inv, i_start, i_end)
 }
 

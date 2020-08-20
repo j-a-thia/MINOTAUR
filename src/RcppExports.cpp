@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // C_harmonicDist
 Rcpp::List C_harmonicDist(std::vector< std::vector<double> > data, std::vector<int> subset, std::vector< std::vector<double> > S_inv);
-RcppExport SEXP MINOTAUR_C_harmonicDist(SEXP dataSEXP, SEXP subsetSEXP, SEXP S_invSEXP) {
+RcppExport SEXP _MINOTAUR_C_harmonicDist(SEXP dataSEXP, SEXP subsetSEXP, SEXP S_invSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // C_harmonicDist_partial
 Rcpp::List C_harmonicDist_partial(std::vector< std::vector<double> > data, std::vector< std::vector<double> > S_inv, int i_start, int i_end);
-RcppExport SEXP MINOTAUR_C_harmonicDist_partial(SEXP dataSEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
+RcppExport SEXP _MINOTAUR_C_harmonicDist_partial(SEXP dataSEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,7 +34,7 @@ END_RCPP
 }
 // C_kernelDeviance
 Rcpp::List C_kernelDeviance(std::vector< std::vector<double> > data, std::vector<int> subset, double sigma2, std::vector< std::vector<double> > S_inv);
-RcppExport SEXP MINOTAUR_C_kernelDeviance(SEXP dataSEXP, SEXP subsetSEXP, SEXP sigma2SEXP, SEXP S_invSEXP) {
+RcppExport SEXP _MINOTAUR_C_kernelDeviance(SEXP dataSEXP, SEXP subsetSEXP, SEXP sigma2SEXP, SEXP S_invSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -48,7 +48,7 @@ END_RCPP
 }
 // C_kernelDeviance_partial
 Rcpp::List C_kernelDeviance_partial(std::vector< std::vector<double> > data, double sigma2, std::vector< std::vector<double> > S_inv, int i_start, int i_end);
-RcppExport SEXP MINOTAUR_C_kernelDeviance_partial(SEXP dataSEXP, SEXP sigma2SEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
+RcppExport SEXP _MINOTAUR_C_kernelDeviance_partial(SEXP dataSEXP, SEXP sigma2SEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -63,7 +63,7 @@ END_RCPP
 }
 // C_kernelDist
 Rcpp::List C_kernelDist(std::vector< std::vector<double> > data, std::vector<int> subset, double sigma2, std::vector< std::vector<double> > S_inv);
-RcppExport SEXP MINOTAUR_C_kernelDist(SEXP dataSEXP, SEXP subsetSEXP, SEXP sigma2SEXP, SEXP S_invSEXP) {
+RcppExport SEXP _MINOTAUR_C_kernelDist(SEXP dataSEXP, SEXP subsetSEXP, SEXP sigma2SEXP, SEXP S_invSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -77,7 +77,7 @@ END_RCPP
 }
 // C_kernelDist_partial
 Rcpp::List C_kernelDist_partial(std::vector< std::vector<double> > data, double sigma2, std::vector< std::vector<double> > S_inv, int i_start, int i_end);
-RcppExport SEXP MINOTAUR_C_kernelDist_partial(SEXP dataSEXP, SEXP sigma2SEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
+RcppExport SEXP _MINOTAUR_C_kernelDist_partial(SEXP dataSEXP, SEXP sigma2SEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -92,7 +92,7 @@ END_RCPP
 }
 // C_neighborDist
 Rcpp::List C_neighborDist(std::vector< std::vector<double> > data, std::vector<int> subset, std::vector< std::vector<double> > S_inv);
-RcppExport SEXP MINOTAUR_C_neighborDist(SEXP dataSEXP, SEXP subsetSEXP, SEXP S_invSEXP) {
+RcppExport SEXP _MINOTAUR_C_neighborDist(SEXP dataSEXP, SEXP subsetSEXP, SEXP S_invSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -105,7 +105,7 @@ END_RCPP
 }
 // C_neighborDist_partial
 Rcpp::List C_neighborDist_partial(std::vector< std::vector<double> > data, std::vector< std::vector<double> > S_inv, int i_start, int i_end);
-RcppExport SEXP MINOTAUR_C_neighborDist_partial(SEXP dataSEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
+RcppExport SEXP _MINOTAUR_C_neighborDist_partial(SEXP dataSEXP, SEXP S_invSEXP, SEXP i_startSEXP, SEXP i_endSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -116,4 +116,21 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(C_neighborDist_partial(data, S_inv, i_start, i_end));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_MINOTAUR_C_harmonicDist", (DL_FUNC) &_MINOTAUR_C_harmonicDist, 3},
+    {"_MINOTAUR_C_harmonicDist_partial", (DL_FUNC) &_MINOTAUR_C_harmonicDist_partial, 4},
+    {"_MINOTAUR_C_kernelDeviance", (DL_FUNC) &_MINOTAUR_C_kernelDeviance, 4},
+    {"_MINOTAUR_C_kernelDeviance_partial", (DL_FUNC) &_MINOTAUR_C_kernelDeviance_partial, 5},
+    {"_MINOTAUR_C_kernelDist", (DL_FUNC) &_MINOTAUR_C_kernelDist, 4},
+    {"_MINOTAUR_C_kernelDist_partial", (DL_FUNC) &_MINOTAUR_C_kernelDist_partial, 5},
+    {"_MINOTAUR_C_neighborDist", (DL_FUNC) &_MINOTAUR_C_neighborDist, 3},
+    {"_MINOTAUR_C_neighborDist_partial", (DL_FUNC) &_MINOTAUR_C_neighborDist_partial, 4},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_MINOTAUR(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

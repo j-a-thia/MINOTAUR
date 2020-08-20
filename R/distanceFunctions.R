@@ -23,7 +23,7 @@
 # Perform simple checks on input data frame to ensure that it can be used with distance functions.
 
 data_checks <- function(dfv, column.nums, subset, S, M, check.na=TRUE, check.S=TRUE, check.M=FALSE) {
-    
+
   #### perform simple checks on data
   # check that dfv is a matrix or data frame
   if (!is.matrix(dfv) & !is.data.frame(dfv))
@@ -49,7 +49,7 @@ data_checks <- function(dfv, column.nums, subset, S, M, check.na=TRUE, check.S=T
   	stop("dfv must contain at least two rows")
 
   # check that subset can be used to index df.vars without error
-  if (class(try(df.vars[subset,],silent=TRUE))=='try-error')
+  if ('try-error' %in% class(try(df.vars[subset,],silent=TRUE)))
     stop("subset must contain valid indexes for choosing rows in dfv")
 
   # subset rows in df.vars
@@ -61,54 +61,54 @@ data_checks <- function(dfv, column.nums, subset, S, M, check.na=TRUE, check.S=T
 
   # calculate covariance of variables
   if (check.S) {
-    
+
     # if S is NULL replace with covariance matrix
     if (is.null(S))
       S <- stats::cov(df.vars_subset, use="pairwise.complete.obs")
-    
+
     # check that S is a matrix
     if (!is.matrix(S))
       stop("S must be a matrix")
-    
+
     # check that S has the same number of rows and cols as variables in df.vars
     if (nrow(S)!=ncol(df.vars) | ncol(S)!=ncol(df.vars))
       stop("S must contain the same number of rows and columns as there are selected variables in dfv")
-    
+
     # check that S contains no NA values
     if (any(is.na(S)))
       stop("covariance matrix S contains NA values")
-    
+
     # check that inverse matrix of S can be calculated (not true if, for example, all values are the same)
-    if (class(try(solve(S),silent=TRUE))=='try-error')
+    if ('try-error' %in% class(try(solve(S),silent=TRUE)))
       stop("covariance matrix S is exactly singular")
-        
+
     # calculate inverse covariance matrix
     S_inv <- solve(S)
   } else {
   	S <- NULL
   	S_inv <- NULL
   }
-  
+
   # calculate mean of variables
   if (check.M) {
-    
+
     # if M is NULL replace with mean over variables
     if (is.null(M))
       M <- colMeans(df.vars_subset,na.rm=TRUE)
-    
+
     # force M to be vector
     M <- as.vector(unlist(M))
-    
+
     # check that M has one element per column of df.vars
     if (length(M)!=ncol(df.vars))
       stop("M must contain one value per selected column of dfv")
   } else {
   	M <- NULL
   }
-  
+
   # return useful output
   output <- list(S=S, S_inv=S_inv, M=M)
-  
+
 }
 
 
@@ -149,7 +149,7 @@ Mahalanobis <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), S=NULL
 
   #### perform simple checks on data
   dfv_check <- data_checks(dfv, column.nums, subset, S, M, check.na=FALSE, check.M=TRUE)
-  
+
   # extract variables from dfv and dfv_check
   diff <- as.matrix(dfv[,column.nums,drop=FALSE])
   S_inv <- dfv_check$S_inv
@@ -205,7 +205,7 @@ harmonicDist <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), S=NUL
 
   #### perform simple checks on data
   dfv_check <- data_checks(dfv, column.nums, subset, S, M=NULL, check.na=TRUE, check.M=FALSE)
-  
+
   # extract variables from dfv and dfv_check
   df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
   S_inv <- dfv_check$S_inv
@@ -258,7 +258,7 @@ neighborDist <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), S=NUL
 
   #### perform simple checks on data
   dfv_check <- data_checks(dfv, column.nums, subset, S, M=NULL, check.na=TRUE, check.M=FALSE)
-  
+
   # extract variables from dfv and dfv_check
   df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
   S_inv <- dfv_check$S_inv
@@ -311,17 +311,17 @@ neighborDist <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), S=NUL
 ########################################################################
 
 kernelDist <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), bandwidth="default", S=NULL){
-  
+
   #### perform simple checks on data
   dfv_check <- data_checks(dfv, column.nums, subset, S, M=NULL, check.na=TRUE, check.M=FALSE)
-  
+
   # extract variables from dfv and dfv_check
   df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
   S_inv <- dfv_check$S_inv
   n <- nrow(df.vars)
   d <- ncol(df.vars)
-  
-  
+
+
   # check that bandwidth is either "default" or numeric. If default then apply Silverman's rule.
   if (is.numeric(bandwidth)) {
     if (bandwidth<=0 | !is.finite(bandwidth))
@@ -337,10 +337,10 @@ kernelDist <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), bandwid
       }
     }
   }
-  
+
   #### calculate kernel density distances using C++ function
   distances <- C_kernelDist(split(t(df.vars), 1:d), subset-1, bandwidth^2, split(S_inv,1:d))$distance
-  
+
   return(distances)
 } # end kernelDist
 
@@ -392,19 +392,19 @@ kernelDeviance <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), ban
 
   #### perform simple checks on data
   dfv_check <- data_checks(dfv, column.nums, subset, S, M=NULL, check.na=TRUE, check.M=FALSE)
-  
+
   # extract variables from dfv and dfv_check
   df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
   S_inv <- dfv_check$S_inv
   d <- ncol(df.vars)
-  
+
   # check that all elements of bandwidth are numeric and between 0 and infinity
   bandwidth <- as.vector(unlist(bandwidth))
   if (any(!is.numeric(bandwidth)))
     stop("bandwidth must be a numeric vector")
   if (any(bandwidth<=0) | any(!is.finite(bandwidth)))
     stop("bandwidth must contain values greater than 0 and less than infinity")
-  
+
   #### calculate deviance for all bandwidths
   output <- rep(NA,length(bandwidth))
   for (i in 1:length(bandwidth)) {
@@ -414,7 +414,7 @@ kernelDeviance <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), ban
     }
     output[i] <- C_kernelDeviance(split(t(df.vars), 1:d), subset-1, bandwidth[i]^2, split(S_inv,1:d))$deviance
   }
-  
+
   return(output)
 } # end kernelDeviance
 
@@ -442,28 +442,28 @@ kernelDeviance <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), ban
 ########################################################################
 
 stat_to_pvalue <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), two.tailed=rep(TRUE,length(column.nums)), right.tailed=rep(FALSE,length(column.nums))){
-	
+
 	# perform simple checks on data
 	dfv_check <- data_checks(dfv, column.nums, subset, S=NULL, M=NULL, check.na=TRUE, check.S=FALSE, check.M=FALSE)
-	
+
 	# extract variables from dfv and create df.p
 	df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
 	n <- nrow(df.vars)
 	d <- ncol(df.vars)
 	df.p <- as.data.frame(matrix(0,n,d))
-	
+
 	# check that two.tailed and right.tailed vectors are correct length
 	if (length(two.tailed)!=d)
 		stop('two.tailed must be a vector of same length as column.nums')
 	if (length(right.tailed)!=d)
 		stop('right.tailed must be a vector of same length as column.nums')
-	
+
 	# check whether using all values or a subset
 	noSubset <- (length(subset)==nrow(dfv))
-	
+
 	# if using all values
 	if (noSubset) {
-		
+
 		for (i in 1:d) {
 			# convert ranking to value between 0 and 1 (inclusive)
 			df.p[,i] <- (rank(df.vars[,i])-1)/(n-1)
@@ -478,16 +478,16 @@ stat_to_pvalue <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), two
 			# ensure that final value is between 0 and 1 (exclusive)
 			df.p[,i] <- (df.p[,i]*n+1)/(n+2)
 		}
-		
+
 	}
-	
+
 	# if comparing against a null distribution
 	if (!noSubset) {
-		
+
 		# get null points
 		df.vars_subset <- as.matrix(df.vars[subset,,drop=FALSE])
 		n2 <- nrow(df.vars_subset)
-		
+
 		for (i in 1:d) {
 			# calculate p-value from position in ordered list, yielding a value between 0 and 1 (inclusive)
 			df.p[,i] <- findInterval(df.vars[,i], sort(df.vars_subset[,i]))/n2
@@ -502,9 +502,9 @@ stat_to_pvalue <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), two
 			# ensure that final value is between 0 and 1 (exclusive)
 			df.p[,i] <- (df.p[,i]*n2+1)/(n2+2)
 		}
-		
+
 	}
-		
+
 	return(df.p)
 }
 
@@ -531,34 +531,34 @@ stat_to_pvalue <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), two
 ########################################################################
 
 DCMS <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), S=NULL, dfp, column.nums.p=1:ncol(dfp)) {
-	
+
 	# check that input dimensions work
 	if (length(column.nums)!=length(column.nums.p))
 		stop('column.nums must contain same number of values as column.nums.p')
-	
+
 	# perform simple checks on data
 	dfv_check <- data_checks(dfv, column.nums, subset, S, M=NULL, check.na=TRUE, check.M=FALSE)
 	dfp_check <- data_checks(dfp, column.nums.p, subset, S=NULL, M=NULL, check.na=TRUE, check.S=FALSE, check.M=FALSE)
-	
+
 	if (nrow(dfv)!=nrow(dfp))
 		stop('dfv and dfp must contain the same number of entries')
-	
+
 	# extract variables from dfv
 	df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
 	n <- nrow(df.vars)
 	d <- ncol(df.vars)
 	df.p <- as.matrix(dfp[,column.nums.p,drop=FALSE])
-	
+
 	# calculate correlation matrix from covariance matrix
 	S <- dfv_check$S
 	corrMat <- S/sqrt(outer(diag(S),diag(S)))
-	
+
 	# calculate DCMS
 	DCMS <- 0
 	for (i in 1:d) {
 		DCMS <- DCMS + (log(1-df.p[,i])-log(df.p[,i]))/sum(abs(corrMat[i,]))
-	}	
-	
+	}
+
 	return(DCMS)
 }
 
@@ -587,28 +587,28 @@ DCMS <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), S=NULL, dfp, 
 ########################################################################
 
 CSS <- function(dfv, column.nums=1:ncol(dfv), subset=1:nrow(dfv), two.tailed=rep(TRUE,length(column.nums)), right.tailed=rep(FALSE,length(column.nums))){
-	
+
 	# perform simple checks on data
 	dfv_check <- data_checks(dfv, column.nums, subset=subset, S, M=NULL, check.na=TRUE, check.S=FALSE, check.M=FALSE)
-	
+
 	# extract variables from dfv
 	df.vars <- as.matrix(dfv[,column.nums,drop=FALSE])
 	n <- nrow(df.vars)
 	d <- ncol(df.vars)
-	
+
 	# convert variables to rank fraction
 	df.rank <- stat_to_pvalue(dfv, column.nums, subset, two.tailed, right.tailed)
-	
+
 	# calculate z-score from rank fraction
 	z <- 0
 	for (i in 1:d) {
 		z <- z + qnorm(df.rank[,i])
 	}
 	z <- z/d
-	
+
 	# calculate p-value and CSS
 	p <- pnorm(z, sd=1/sqrt(d))
 	CSS <- -log(p)/log(10)
 
-	return(CSS)	
+	return(CSS)
 }
